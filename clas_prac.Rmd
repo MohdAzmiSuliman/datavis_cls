@@ -1,0 +1,110 @@
+---
+title: "data visulization class"
+author: "Mohd Azmi"
+date: "29/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Hands on 1
+
+```{r, warning=FALSE}
+library(tidyverse)
+library(gapminder)
+library(summarytools)
+dataset <- gapminder
+```
+
+```{r}
+descr(dataset)
+freq(dataset)
+```
+
+
+```{r}
+ggplot(data = dataset) +
+  geom_point(mapping = aes(x = year, y = lifeExp, colour = continent)) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(data = dataset) +
+  geom_point(mapping = aes(x = year, y = lifeExp, size = gdpPercap)) +
+  theme_minimal()
+```
+
+
+```{r}
+ggplot(data = dataset) +
+  geom_point(mapping = aes(x = year, y = lifeExp, shape = continent)) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(data = dataset) +
+  geom_point(mapping = aes(x = year, y = lifeExp), colour = "purple") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(data = dataset) +
+  geom_point(mapping = aes(x = year, y = lifeExp), shape = 5) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(data = dataset) +
+  geom_point(mapping = aes(x = year, y = lifeExp)) +
+  facet_wrap(~ continent) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(dataset) +
+  geom_point(mapping = aes(x = gdpPercap, y = lifeExp)) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(dataset) +
+  geom_smooth(mapping = aes(x = log(gdpPercap), y = lifeExp, colour = continent)) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(dataset) +
+  geom_point(mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_smooth(mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(dataset, mapping = aes(x = 1/(gdpPercap), y = lifeExp)) +
+  geom_point(mapping = aes(colour = continent)) + geom_smooth()
+```
+
+```{r}
+ggplot(dataset, mapping = aes(x = log(gdpPercap), y = lifeExp, colour = continent)) +
+  geom_point() + geom_smooth()
+```
+
+```{r}
+ggplot(dataset, aes(continent)) +
+  geom_bar(aes(y = ..prop.., group = 1))
+```
+
+```{r}
+train_plot1 <- ggplot(dataset, mapping = aes(x = log(gdpPercap), y = lifeExp, colour = continent)) +
+  geom_point() + geom_smooth() + theme_minimal()
+
+train_plot1 + ggtitle("scaterplot")
+train_plot1 + ggtitle("scaterplot \nnice")
+train_plot1 + scale_x_continuous(breaks = seq(0,12,1))
+train_plot2 <- train_plot1 + ggtitle("scaterplot") + ylab("life expectancy")
+
+ggsave("nice_plot.png", width = 10, height = 6, units = "cm")
+```
+
