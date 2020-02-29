@@ -108,3 +108,64 @@ train_plot2 <- train_plot1 + ggtitle("scaterplot") + ylab("life expectancy")
 ggsave("nice_plot.png", width = 10, height = 6, units = "cm")
 ```
 
+
+```{r}
+dataset_life <- dataset %>% group_by(continent) %>% summarise(mean_life = mean(lifeExp))
+dataset_life
+ggplot(dataset_life, aes(x = continent, y = mean_life)) + geom_col()
+```
+
+```{r}
+dataset %>% group_by(continent) %>% summarise(mean_life = mean(lifeExp)) %>% 
+  ggplot(aes(x=continent, y = mean_life, fill = continent)) +
+  geom_col() + ylab("mean of life expectency")
+```
+
+```{r}
+dataset %>% group_by(continent) %>% summarise(mean_life = mean(lifeExp)) %>% 
+  ggplot(aes(x=continent, y = mean_life, fill = continent)) +
+  geom_col() + ylab("mean of life expectency") +
+  coord_flip()
+```
+
+```{r}
+ggplot(dataset, aes(lifeExp)) +
+  geom_histogram(binwidth = 1) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(dataset, aes(lifeExp)) +
+  geom_histogram(binwidth = 1, colour = "red", fill="blue") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(dataset, aes(lifeExp)) +
+  geom_histogram(binwidth = 1, fill="blue", aes(y=..density..)) +
+  geom_density(colour = "red") +
+  theme_minimal()
+```
+
+```{r}
+ggplot(dataset, aes(lifeExp, fill = continent)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+```
+
+```{r}
+ggplot(dataset, aes(lifeExp))+
+  geom_histogram(binwidth = 1, position = "identity") +
+  facet_wrap(~continent, nrow = 3)
+```
+
+```{r}
+dataset_52n07 <- dataset %>% 
+  filter(year == 1952 | year == 2007)
+
+ggplot(dataset_52n07, aes(lifeExp, fill = continent))+
+  geom_histogram(binwidth = 1) +
+  facet_wrap(~ year, nrow = 2) +
+  geom_vline(xintercept = c(50,60,70), colour = "red") +
+  theme_classic()
+```
+
