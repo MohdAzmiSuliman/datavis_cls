@@ -110,6 +110,13 @@ ggsave("nice_plot.png", width = 10, height = 6, units = "cm")
 
 
 ```{r}
+train_plot1
+train_plot1 + scale_x_continuous(breaks = seq(0,12,1))
+```
+
+
+
+```{r}
 dataset_life <- dataset %>% group_by(continent) %>% summarise(mean_life = mean(lifeExp))
 dataset_life
 ggplot(dataset_life, aes(x = continent, y = mean_life)) + geom_col()
